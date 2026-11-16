@@ -282,6 +282,14 @@ function saveJournal() {
   const entries = getList("vaelenJournal");
   entries.unshift({ text: entry, date: new Date().toLocaleString() });
   localStorage.setItem("vaelenJournal", JSON.stringify(entries));
+  const character = getCharacter();
+if (localStorage.getItem("vaelenGiftUnlocked") === "true") {
+    document.getElementById("christmasGift").classList.remove("hidden");
+}
+if (character.charName.trim() !== "") {
+    localStorage.setItem("vaelenGiftUnlocked", "true");
+    document.getElementById("christmasGift").classList.remove("hidden");
+}
   input.value = "";
   renderJournal();
 }
