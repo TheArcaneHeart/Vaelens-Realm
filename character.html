@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Creation | Vaelen's Realm</title>
+<style>
+:root {
+  --bg:#101b17; --panel:#1b2b23; --panel2:#24382d;
+  --gold:#d8b66b; --text:#f3eddf; --muted:#c3cbbd;
+  --line:#52634f; --danger:#bd7770;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; padding:24px 14px 50px;
+  background:radial-gradient(ellipse at top,#263b2e,var(--bg) 65%);
+  color:var(--text); font-family:Georgia,serif; line-height:1.6;
+}
+main { max-width:900px; margin:auto; }
+header { text-align:center; padding:24px 10px; }
+h1,h2,h3 { color:var(--gold); }
+h1 { font-size:clamp(2rem,6vw,3.2rem); margin:0; }
+header p { color:var(--muted); }
+nav { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:12px 0 25px; }
+a,button {
+  color:var(--text); text-decoration:none; cursor:pointer;
+  border:1px solid var(--gold); border-radius:8px;
+  background:#263b2e; padding:10px 15px; font:inherit;
+}
+a:hover,button:hover { background:#3a513c; }
+.panel {
+  background:linear-gradient(145deg,var(--panel),#17251e);
+  border:1px solid var(--line); border-radius:13px;
+  padding:20px; margin:18px 0;
+}
+label { display:block; color:var(--gold); margin:13px 0 5px; }
+input,select,textarea {
+  display:block; width:100%; padding:11px;
+  border:1px solid var(--line); border-radius:7px;
+  background:#101a15; color:var(--text); font:inherit;
+}
+textarea { min-height:95px; resize:vertical; }
+small,.hint { color:var(--muted); }
+.checkline { display:flex; gap:10px; align-items:center; margin:12px 0; }
+.checkline input { width:auto; }
+.checkline label { margin:0; color:var(--text); }
+.actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+.danger { border-color:var(--danger); }
+.hidden { display:none; }
+#status { color:var(--gold); min-height:1.5em; }
+.entry { border-top:1px solid var(--line); padding:12px 0; }
+footer { text-align:center; color:var(--muted); margin-top:35px; }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>✦ Character Creation ✦</h1>
+  <p>Every great story begins with someone.</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="#creator">Character</a>
+  <a href="#journal">Journal</a>
+  <a href="#vocabulary">Notebook</a>
+</nav>
+
+<section class="panel" id="creator">
+  <h2>Your Character</h2>
+  <p class="hint">Build a character for the Realm. You can save and return to your creation later.</p>
+
+  <label for="charName">Character name</label>
+  <input id="charName" placeholder="What are you called?">
+
+  <label for="species">Species</label>
+  <input id="species" placeholder="Human, dragon, wolf, elf...">
+
+  <label for="pronouns">Pronouns</label>
+  <input id="pronouns" placeholder="They/them, she/her, he/him...">
+
+  <label for="appearance">Appearance</label>
+  <textarea id="appearance" placeholder="Describe your character's appearance..."></textarea>
+
+  <label for="background">Background</label>
+  <textarea id="background" placeholder="Where did they come from? What shaped them?"></textarea>
+
+  <label for="personality">Personality</label>
+  <textarea id="personality" placeholder="How do they think, act, and treat others?"></textarea>
+
+  <label for="skills">Skills and abilities</label>
+  <textarea id="skills" placeholder="What can they do? What are they learning?"></textarea>
+
+  <label for="goals">Goals and dreams</label>
+  <textarea id="goals" placeholder="What do they hope to accomplish?"></textarea>
+</section>
+
+<section class="panel" id="transformation">
+  <h2>✧ Transformation — Optional Story Setting</h2>
+  <p class="hint">This setting is entirely optional. It records what you would like to happen if transformation becomes part of a later adventure.</p>
+
+  <div class="checkline">
+    <input type="checkbox" id="tfEnabled">
+    <label for="tfEnabled">Allow transformation later in the story</label>
+  </div>
+
+  <div id="tfOptions" class="hidden">
+    <label for="tfType">What might your character transform into?</label>
+    <input id="tfType" placeholder="A dragon, wolf, hybrid, another form...">
+
+    <label for="tfTrigger">Preferred story trigger</label>
+    <select id="tfTrigger">
+      <option value="When the storyteller introduces it">When the storyteller introduces it</option>
+      <option value="A deliberate choice by my character">A deliberate choice by my character</option>
+      <option value="A magical event or discovery">A magical event or discovery</option>
+      <option value="A major story milestone">A major story milestone</option>
+      <option value="Discuss it with me first">Discuss it with me first</option>
+    </select>
+
+    <label for="tfPace">Transformation pace</label>
+    <select id="tfPace">
+      <option value="Gradual">Gradual — develops over time</option>
+      <option value="One major event">One major event</option>
+      <option value="Several stages">Several stages</option>
+      <option value="Let the story decide">Let the story decide</option>
+    </select>
+
+    <label for="tfReversibility">Can the transformation be reversed?</label>
+    <select id="tfReversibility">
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="Maybe, depending on the story">Maybe, depending on the story</option>
+      <option value="Discuss it with me first">Discuss it with me first</option>
+    </select>
+
+    <label for="tfNotes">Boundaries and extra wishes</label>
+    <textarea id="tfNotes" placeholder="What should the storyteller know? For example: ask before permanent changes, preserve my character's personality, or let me choose the final form."></textarea>
+
+    <p class="hint">Storyteller note: Keep transformation inactive until it is introduced in the story. Respect the player's preferences and boundaries.</p>
+  </div>
+</section>
+
+<div class="panel">
+  <h2>Save Your Character</h2>
+  <div class="actions">
+    <button type="button" onclick="saveCharacter()">Save Character</button>
+    <button type="button" onclick="loadCharacter()">Load Character</button>
+    <button type="button" class="danger" onclick="clearCharacter()">Clear Character</button>
+  </div>
+  <p id="status" aria-live="polite"></p>
+</div>
+
+<section class="panel" id="journal">
+  <h2>📖 Adventure Journal</h2>
+  <p class="hint">Keep track of discoveries, memories, and important events.</p>
+  <label for="journalEntry">New journal entry</label>
+  <textarea id="journalEntry" placeholder="Today, my character discovered..."></textarea>
+  <div class="actions">
+    <button type="button" onclick="saveJournal()">Add Entry</button>
+  </div>
+  <div id="journalEntries"></div>
+</section>
+
+<section class="panel" id="vocabulary">
+  <h2>📚 Vocabulary Notebook</h2>
+  <p class="hint">Save unfamiliar words, names, and discoveries.</p>
+  <label for="wordInput">Word or name</label>
+  <input id="wordInput" placeholder="Enter a word">
+  <label for="wordMeaning">Meaning or notes</label>
+  <textarea id="wordMeaning" placeholder="What does it mean?"></textarea>
+  <div class="actions">
+    <button type="button" onclick="addWord()">Save Word</button>
+  </div>
+  <div id="wordEntries"></div>
+</section>
+
+<footer>
+  <p>✦ Vaelen's Realm — The Arcane Heart ✦</p>
+  <p>Your story. Your choices. Your realm.</p>
+</footer>
+</main>
+
+<script>
+const characterFields = [
+  "charName","species","pronouns","appearance",
+  "background","personality","skills","goals",
+  "tfEnabled","tfType","tfTrigger","tfPace",
+  "tfReversibility","tfNotes"
+];
+
+function getCharacter() {
+  const data = {};
+  characterFields.forEach(id => {
+    const el = document.getElementById(id);
+    data[id] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  return data;
+}
+
+function putCharacter(data) {
+  characterFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (data[id] !== undefined) {
+      if (el.type === "checkbox") el.checked = !!data[id];
+      else el.value = data[id];
+    }
+  });
+  updateTF();
+}
+
+function saveCharacter() {
+  try {
+    localStorage.setItem("vaelenCharacter", JSON.stringify(getCharacter()));
+    document.getElementById("status").textContent = "✦ Character saved in this browser!";
+  } catch (error) {
+    document.getElementById("status").textContent = "Could not save. Your browser storage may be unavailable.";
+  }
+}
+
+function loadCharacter() {
+  try {
+    const saved = localStorage.getItem("vaelenCharacter");
+    if (!saved) {
+      document.getElementById("status").textContent = "No saved character found in this browser yet.";
+      return;
+    }
+    putCharacter(JSON.parse(saved));
+    document.getElementById("status").textContent = "✦ Character loaded!";
+  } catch (error) {
+    document.getElementById("status").textContent = "The saved character could not be read.";
+  }
+}
+
+function clearCharacter() {
+  if (!confirm("Clear the character form? This does not erase journal entries or notebook words.")) return;
+  characterFields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el.type === "checkbox") el.checked = false;
+    else el.value = "";
+  });
+  localStorage.removeItem("vaelenCharacter");
+  updateTF();
+  document.getElementById("status").textContent = "Character form cleared.";
+}
+
+function updateTF() {
+  const enabled = document.getElementById("tfEnabled").checked;
+  document.getElementById("tfOptions").classList.toggle("hidden", !enabled);
+}
+document.getElementById("tfEnabled").addEventListener("change", updateTF);
+updateTF();
+
+function getList(key) {
+  try { return JSON.parse(localStorage.getItem(key) || "[]"); }
+  catch (error) { return []; }
+}
+
+function saveJournal() {
+  const input = document.getElementById("journalEntry");
+  const entry = input.value.trim();
+  if (!entry) return;
+  const entries = getList("vaelenJournal");
+  entries.unshift({ text: entry, date: new Date().toLocaleString() });
+  localStorage.setItem("vaelenJournal", JSON.stringify(entries));
+  input.value = "";
+  renderJournal();
+}
+
+function renderJournal() {
+  const area = document.getElementById("journalEntries");
+  area.replaceChildren();
+  getList("vaelenJournal").forEach(entry => {
+    const div = document.createElement("div");
+    div.className = "entry";
+    const date = document.createElement("small");
+    date.textContent = entry.date || "";
+    const content = document.createElement("p");
+    content.textContent = entry.text || "";
+    div.append(date, content);
+    area.append(div);
+  });
+}
+
+function addWord() {
+  const word = document.getElementById("wordInput").value.trim();
+  const meaning = document.getElementById("wordMeaning").value.trim();
+  if (!word) return;
+  const words = getList("vaelenWords");
+  words.unshift({ word, meaning });
+  localStorage.setItem("vaelenWords", JSON.stringify(words));
+  document.getElementById("wordInput").value = "";
+  document.getElementById("wordMeaning").value = "";
+  renderWords();
+}
+
+function renderWords() {
+  const area = document.getElementById("wordEntries");
+  area.replaceChildren();
+  getList("vaelenWords").forEach(item => {
+    const div = document.createElement("div");
+    div.className = "entry";
+    const title = document.createElement("strong");
+    title.textContent = item.word || "";
+    const meaning = document.createElement("p");
+    meaning.textContent = item.meaning || "";
+    div.append(title, meaning);
+    area.append(div);
+  });
+}
+
+renderJournal();
+renderWords();
+loadCharacter();
+</script>
+</body>
+</html>
