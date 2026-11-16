@@ -1,6 +1,6 @@
 
-export default async function handler(req, res) {
-  const allowedOrigin = "https://thearcaneheart.github.io";
+const API_URL =
+  "https://vaelens-realm-z3ih-thearcaneheart.vercel.app/api/chat";
 
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
