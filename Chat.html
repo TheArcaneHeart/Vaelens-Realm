@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaelen's Realm - Storyteller</title>
+
+<style>
+body {
+  background: #101710;
+  color: #eee8d5;
+  font-family: Georgia, serif;
+  margin: 0;
+  padding: 20px;
+}
+main {
+  max-width: 750px;
+  margin: auto;
+}
+h1 {
+  color: #d9b86c;
+  text-align: center;
+}
+#chat {
+  background: #1c281e;
+  border: 1px solid #806b3d;
+  border-radius: 12px;
+  padding: 16px;
+  height: 55vh;
+  min-height: 300px;
+  overflow-y: auto;
+}
+.message {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.player {
+  background: #344b37;
+  text-align: right;
+}
+.storyteller {
+  background: #3b3425;
+}
+#status {
+  color: #d9b86c;
+  min-height: 24px;
+  margin: 10px 0;
+}
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px;
+  background: #263329;
+  color: white;
+  border: 1px solid #806b3d;
+  border-radius: 8px;
+}
+button {
+  padding: 12px 18px;
+  background: #9b793d;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.5;
+}
+</style>
+</head>
+
+<body>
+<main>
+  <h1>🐉 Vaelen's Realm</h1>
+  <p style="text-align:center">
+    Your adventure begins here.
+  </p>
+
+  <div id="chat" aria-live="polite">
+    <div class="message storyteller">
+      Welcome, traveler. What brings you to this realm?
+    </div>
+  </div>
+
+  <div id="status"></div>
+
+  <div class="controls">
+    <input id="message"
+      type="text"
+      placeholder="Write your message..."
+      autocomplete="off">
+    <button id="send" onclick="sendMessage()">Send</button>
+  </div>
+</main>
+
+<script>
+// Replace this with your actual Vercel API address.
+const API_URL =
+  "https://YOUR-VERCEL-PROJECT.vercel.app/api/chat";
+
+let previousResponseId = null;
+
+const chat = document.getElementById("chat");
+const input = document.getElementById("message");
+const sendButton = document.getElementById("send");
+const statusBox = document.getElementById("status");
+
+function addMessage(text, type) {
+  const message = document.createElement("div");
+  message.className = "message " + type;
+  message.textContent = text;
+  chat.appendChild(message);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function sendMessage() {
+  const text = input.value.trim();
+
+  if (!text || sendButton.disabled) return;
+
+  addMessage(text, "player");
+  input.value = "";
+  sendButton.disabled = true;
+  statusBox.textContent = "The storyteller is thinking...";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: text,
+        previousResponseId: previousResponseId
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "The storyteller could not respond.");
+    }
+
+    addMessage(data.reply, "storyteller");
+
+    if (data.responseId) {
+      previousResponseId = data.responseId;
+    }
+
+    statusBox.textContent = "";
+
+  } catch (error) {
+    statusBox.textContent = "Connection error: " + error.message;
+  }
+
+  sendButton.disabled = false;
+  input.focus();
+}
+
+input.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+});
+</script>
+</body>
+</html>
